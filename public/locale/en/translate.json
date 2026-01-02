@@ -1,0 +1,79 @@
+{
+  "sidebar": {
+    "title": "Apartment Dashboard",
+    "admin": "Admin",
+    "dashboard": "Dashboard",
+    "users": "Users",
+    "profile": "Profile",
+    "changeLanguage": "Change Language"
+  },
+  "navbar": {
+    "dashboard": "Dashboard",
+    "searchPlaceholder": "Search on users's name ...",
+    "mode": "Mode",
+    "notifications": "Notifications",
+    "noNotifications": "No notifications",
+    "account": "Account",
+    "profile": "Profile",
+    "settings": "Settings",
+    "signOut": "Sign out"
+  },
+  "common": {
+    "welcome": "Welcome"
+  },
+  "pages": {
+    "dashboard": "Dashboard",
+    "users": "Users",
+    "profile": "Profile"
+  },
+  "dashboard": {
+    "usersCount": "Users Count",
+    "apartmentsCount": "Apartments Count",
+    "reservationsCount": "Reservations Count",
+    "serverError": "Server Error",
+    "serverErrorMessage": "Please start the backend server",
+    "loading": "Loading..."
+  },
+  "auth": {
+    "phone": "Phone Number",
+    "phonePlaceholder": "Enter your phone number",
+    "password": "Password",
+    "passwordPlaceholder": "Enter your password",
+    "newPassword": "New Password",
+    "confirmPassword": "Confirm Password",
+    "confirmPasswordPlaceholder": "Confirm your password",
+    "rememberMe": "Remember me",
+    "forgotPassword": "Forgot Password?",
+    "backToLogin": "Back to Login",
+    "login": {
+      "title": "Sign in to your account",
+      "subtitle": "Enter your details below to continue to dashboard.",
+      "signIn": "Sign In",
+      "signingIn": "Signing in..."
+    },
+    "forgotPassword": {
+      "title": "Reset Password",
+      "subtitle": "Enter your phone number to receive an OTP code.",
+      "sendOTP": "Send OTP",
+      "sending": "Sending...",
+      "back": "Back"
+    },
+    "verifyOTP": {
+      "title": "Verify OTP",
+      "subtitle": "Enter the 6-digit code sent to your phone.",
+      "otpLabel": "OTP Code",
+      "verify": "Verify",
+      "verifying": "Verifying..."
+    },
+    "resetPassword": {
+      "title": "Set New Password",
+      "subtitle": "Enter your new password below.",
+      "reset": "Reset Password",
+      "resetting": "Resetting..."
+    }
+  },
+  "users": {
+    "addUser": "Add User"
+  }
+}
+

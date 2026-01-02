@@ -1,0 +1,79 @@
+{
+  "sidebar": {
+    "title": "لوحة تحكم الشقق",
+    "admin": "مدير",
+    "dashboard": "لوحة التحكم",
+    "users": "المستخدمون",
+    "profile": "الملف الشخصي",
+    "changeLanguage": "تغيير اللغة"
+  },
+  "navbar": {
+    "dashboard": "لوحة التحكم",
+    "searchPlaceholder": "بحث عن مستخدمين من خلال أسمائهم...",
+    "mode": "الوضع",
+    "notifications": "الإشعارات",
+    "noNotifications": "لا توجد إشعارات",
+    "account": "الحساب",
+    "profile": "الملف الشخصي",
+    "settings": "الإعدادات",
+    "signOut": "تسجيل الخروج"
+  },
+  "common": {
+    "welcome": "مرحباً"
+  },
+  "pages": {
+    "dashboard": "لوحة التحكم",
+    "users": "المستخدمون",
+    "profile": "الملف الشخصي"
+  },
+  "dashboard": {
+    "usersCount": "عدد المستخدمين",
+    "apartmentsCount": "عدد الشقق",
+    "reservationsCount": "عدد الحجوزات",
+    "serverError": "خطأ في السيرفر",
+    "serverErrorMessage": "يرجى تشغيل سيرفر الباك اند",
+    "loading": "جاري التحميل..."
+  },
+  "auth": {
+    "phone": "رقم الهاتف",
+    "phonePlaceholder": "أدخل رقم هاتفك",
+    "password": "كلمة المرور",
+    "passwordPlaceholder": "أدخل كلمة المرور",
+    "newPassword": "كلمة المرور الجديدة",
+    "confirmPassword": "تأكيد كلمة المرور",
+    "confirmPasswordPlaceholder": "أكد كلمة المرور",
+    "rememberMe": "تذكرني",
+    "forgotPassword": "نسيت كلمة المرور؟",
+    "backToLogin": "العودة لتسجيل الدخول",
+    "login": {
+      "title": "تسجيل الدخول",
+      "subtitle": "أدخل بياناتك للمتابعة إلى لوحة التحكم.",
+      "signIn": "تسجيل الدخول",
+      "signingIn": "جاري تسجيل الدخول..."
+    },
+    "forgotPassword": {
+      "title": "إعادة تعيين كلمة المرور",
+      "subtitle": "أدخل رقم هاتفك لاستلام رمز التحقق.",
+      "sendOTP": "إرسال رمز التحقق",
+      "sending": "جاري الإرسال...",
+      "back": "رجوع"
+    },
+    "verifyOTP": {
+      "title": "تحقق من الرمز",
+      "subtitle": "أدخل الرمز المكون من 6 أرقام المرسل لهاتفك.",
+      "otpLabel": "رمز التحقق",
+      "verify": "تحقق",
+      "verifying": "جاري التحقق..."
+    },
+    "resetPassword": {
+      "title": "تعيين كلمة مرور جديدة",
+      "subtitle": "أدخل كلمة المرور الجديدة أدناه.",
+      "reset": "إعادة تعيين كلمة المرور",
+      "resetting": "جاري إعادة التعيين..."
+    }
+  },
+  "users": {
+    "addUser": "إضافة مستخدم"
+  }
+}
+
