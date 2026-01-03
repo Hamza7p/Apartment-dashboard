@@ -5,3 +5,4 @@ export { default as Profile } from './profile/Profile.jsx';
 export { default as Auth } from './auth/Auth.jsx';
 export { default as Login } from './auth/Login.jsx';
 export { default as ForgetPassword } from './auth/ForgetPassword.jsx';
+export { default as UserDetails } from './users/id/UserDetails.jsx';

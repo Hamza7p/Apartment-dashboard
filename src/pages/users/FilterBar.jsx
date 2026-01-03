@@ -12,6 +12,7 @@ const FilterBar = () => {
       <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
         <Button variant="outlined" color='primary'>All</Button>
         <Button variant="outlined" color='success'>Approved</Button>
+        <Button variant="outlined" color='warning'>Pending</Button>
         <Button variant="outlined" color='error'>Rejected</Button>
       </Box> 
 

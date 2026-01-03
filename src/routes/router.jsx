@@ -1,5 +1,5 @@
 import { createBrowserRouter } from "react-router";
-import { Auth, Dashboard, ForgetPassword, Login, NotFound, Profile, Users } from "../pages";
+import { Auth, Dashboard, ForgetPassword, Login, NotFound, Profile, UserDetails, Users } from "../pages";
 import App from "../App";
 import { AdminMiddleware, AuthMiddleware } from "../middlewares/Middleware.jsx";
 
@@ -15,7 +15,11 @@ export const router = createBrowserRouter([
             },
             {
                 path: "/users",
-                element: <Users />
+                element: <Users />,
+            },
+            {
+                path: 'users/:id',
+                element: <UserDetails />
             },
             {
                 path: "/profile",

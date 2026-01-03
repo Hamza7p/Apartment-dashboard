@@ -73,7 +73,15 @@
     }
   },
   "users": {
-    "addUser": "Add User"
+    "addUser": "Add User",
+    "first_name": "First Name",
+    "last_name": "Last Name",
+    "phone": "Phone Number",
+    "status": "Status",
+    "id": "ID",
+    "photo": "Photo",
+    "actions": "Actions",
+    "role": "Role"
   }
 }
 

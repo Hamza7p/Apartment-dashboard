@@ -31,7 +31,7 @@ const App = () => {
       >
         <NavBar onOpenSidebar={handleOpenSidebar} title={t("sidebar.title")} />
 
-        <Box component="main" sx={{ p: { xs: 2, md: 3 }, transition: "padding 0.3s cubic-bezier(0.4, 0, 0.2, 1)" }}>
+        <Box component="main" sx={{ p: { xs: 2, md: 3 }, width: '100%', transition: "padding 0.3s cubic-bezier(0.4, 0, 0.2, 1)" }}>
           <Outlet />
         </Box>
       </Box>
