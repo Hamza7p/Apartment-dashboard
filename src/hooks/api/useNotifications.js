@@ -35,14 +35,29 @@ export const useUnreadNotificationsCount = (options = {}) => {
  */
 export const useMarkAllNotificationsAsRead = (options = {}) => {
   return useApiMutation("POST", "notifications/read", {
-    invalidateQueries: ["notifications"],
+    invalidateQueries: ["notifications", "notifications", "unread-count"],
     ...options,
   });
+};
+
+/**
+ * Hook to mark a single notification as read
+ */
+export const useMarkNotificationAsRead = (options = {}) => {
+  return useApiMutation(
+    "POST",
+    (notificationId) => `notifications/${notificationId}/read`,
+    {
+      invalidateQueries: ["notifications", "notifications", "unread-count"],
+      ...options,
+    }
+  );
 };
 
 export default {
   useNotifications,
   useUnreadNotificationsCount,
   useMarkAllNotificationsAsRead,
+  useMarkNotificationAsRead,
 };
 

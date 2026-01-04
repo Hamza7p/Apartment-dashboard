@@ -19,7 +19,14 @@
     "signOut": "تسجيل الخروج"
   },
   "common": {
-    "welcome": "مرحباً"
+    "welcome": "مرحباً",
+    "cancel": "إلغاء",
+    "save": "حفظ",
+    "create": "إنشاء",
+    "creating": "جاري الإنشاء...",
+    "delete": "حذف",
+    "deleting": "جاري الحذف...",
+    "edit": "تعديل"
   },
   "pages": {
     "dashboard": "لوحة التحكم",
@@ -43,7 +50,7 @@
     "confirmPassword": "تأكيد كلمة المرور",
     "confirmPasswordPlaceholder": "أكد كلمة المرور",
     "rememberMe": "تذكرني",
-    "forgotPassword": "نسيت كلمة المرور؟",
+    "forgetPassword": "نسيت كلمة المرور؟",
     "backToLogin": "العودة لتسجيل الدخول",
     "login": {
       "title": "تسجيل الدخول",
@@ -73,15 +80,52 @@
     }
   },
   "users": {
+    "all": "الكل",
+    "edit": "تعديل",
+    "searchPlaceholder": "ابحث عن مستخدم باسمه ...",
     "addUser": "إضافة مستخدم",
+    "createUser": "إنشاء مستخدم جديد",
     "first_name": "الاسم الأول",
     "last_name": "اسم العائلة",
     "phone": "رقم الهاتف",
+    "phoneHint": "يجب أن يبدأ رقم الهاتف بـ 9639 متبوعاً بـ 8 أرقام",
+    "password": "كلمة المرور",
+    "passwordHint": "الحد الأدنى 4 أحرف",
     "status": "الحالة",
     "id": "المعرف",
     "photo": "الصورة",
     "actions": "الإجراءات",
-    "role": "الدور"
+    "role": "الدور",
+    "admin": "مدير",
+    "user": "مستخدم",
+    "date_of_birth": "تاريخ الميلاد",
+    "username": "اسم المستخدم",
+    "verified_at": "تاريخ التحقق",
+    "user_details": "تفاصيل المستخدم",
+    "deleteConfirmTitle": "حذف المستخدم",
+    "deleteConfirmMessage": "هل أنت متأكد من حذف المستخدم {{name}}؟",
+    "errorCreatingUser": "خطأ في إنشاء المستخدم",
+    "errorUpdatingUser": "خطأ في تحديث المستخدم",
+    "errorLoadingUser": "خطأ في تحميل المستخدم",
+    "errorLoadingUsers": "خطأ في تحميل المستخدمين",
+    "networkError": "خطأ في الشبكة. يرجى التحقق من الاتصال.",
+    "approved": "موافق عليه",
+    "pending": "قيد الانتظار",
+    "rejected": "مرفوض",
+    "invalidImageType": "يرجى اختيار ملف صورة صالح",
+    "imageTooLarge": "يجب أن يكون حجم الصورة أقل من 5 ميجابايت",
+    "validation": {
+      "phoneRequired": "رقم الهاتف مطلوب",
+      "phoneFormat": "يجب أن يبدأ رقم الهاتف بـ 9639 متبوعاً بـ 8 أرقام",
+      "passwordRequired": "كلمة المرور مطلوبة",
+      "passwordMin": "يجب أن تكون كلمة المرور 4 أحرف على الأقل",
+      "roleRequired": "الدور مطلوب",
+      "roleInvalid": "الدور المحدد غير صالح",
+      "firstNameRequired": "الاسم الأول مطلوب",
+      "lastNameRequired": "اسم العائلة مطلوب",
+      "dateOfBirthRequired": "تاريخ الميلاد مطلوب",
+      "dateOfBirthFormat": "يجب أن يكون التاريخ بصيغة yyyy-mm-dd"
+    }
   }
 }
 

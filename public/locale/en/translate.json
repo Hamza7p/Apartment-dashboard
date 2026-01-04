@@ -19,7 +19,14 @@
     "signOut": "Sign out"
   },
   "common": {
-    "welcome": "Welcome"
+    "welcome": "Welcome",
+    "cancel": "Cancel",
+    "save": "Save",
+    "create": "Create",
+    "creating": "Creating...",
+    "delete": "Delete",
+    "deleting": "Deleting...",
+    "edit": "Edit"
   },
   "pages": {
     "dashboard": "Dashboard",
@@ -43,7 +50,7 @@
     "confirmPassword": "Confirm Password",
     "confirmPasswordPlaceholder": "Confirm your password",
     "rememberMe": "Remember me",
-    "forgotPassword": "Forgot Password?",
+    "forgetPassword": "Forget Password?",
     "backToLogin": "Back to Login",
     "login": {
       "title": "Sign in to your account",
@@ -73,15 +80,52 @@
     }
   },
   "users": {
+    "all": "All",
+    "edit": "Edit",
+    "searchPlaceholder": "Search on users's name ...",
     "addUser": "Add User",
+    "createUser": "Create New User",
     "first_name": "First Name",
     "last_name": "Last Name",
     "phone": "Phone Number",
+    "phoneHint": "Phone must start with 9639 followed by 8 digits",
+    "password": "Password",
+    "passwordHint": "Minimum 4 characters",
     "status": "Status",
     "id": "ID",
     "photo": "Photo",
     "actions": "Actions",
-    "role": "Role"
+    "role": "Role",
+    "admin": "Admin",
+    "user": "User",
+    "date_of_birth": "Date of Birth",
+    "username": "Username",
+    "verified_at": "Verified At",
+    "user_details": "User Details",
+    "deleteConfirmTitle": "Delete User",
+    "deleteConfirmMessage": "Are you sure you want to delete user {{name}}?",
+    "errorCreatingUser": "Error creating user",
+    "errorUpdatingUser": "Error updating user",
+    "errorLoadingUser": "Error loading user",
+    "errorLoadingUsers": "Error loading users",
+    "networkError": "Network error. Please check your connection.",
+    "approved": "Approved",
+    "pending": "Pending",
+    "rejected": "Rejected",
+    "invalidImageType": "Please select a valid image file",
+    "imageTooLarge": "Image size should be less than 5MB",
+    "validation": {
+      "phoneRequired": "Phone number is required",
+      "phoneFormat": "Phone must start with 9639 followed by 8 digits",
+      "passwordRequired": "Password is required",
+      "passwordMin": "Password must be at least 4 characters",
+      "roleRequired": "Role is required",
+      "roleInvalid": "Invalid role selected",
+      "firstNameRequired": "First name is required",
+      "lastNameRequired": "Last name is required",
+      "dateOfBirthRequired": "Date of birth is required",
+      "dateOfBirthFormat": "Date must be in yyyy-mm-dd format"
+    }
   }
 }
 

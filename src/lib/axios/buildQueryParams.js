@@ -15,6 +15,7 @@ export const buildQueryParams = ({
   orders = [],
   page,
   perPage,
+  keyword,
   ...otherParams
 } = {}) => {
   const params = { ...otherParams };
@@ -42,6 +43,11 @@ export const buildQueryParams = ({
   }
   if (perPage !== undefined) {
     params.perPage = perPage;
+  }
+
+  // Add keyword search
+  if (keyword) {
+    params.keyword = keyword;
   }
 
   return params;

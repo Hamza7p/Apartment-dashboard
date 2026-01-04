@@ -24,13 +24,14 @@ export const useUploadMedia = (options = {}) => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (file) => {
+    mutationFn: async ({ file, purpose = 'personal-photo', type = 1 }) => {
       const formData = new FormData();
-      formData.append("file", file);
-
+      formData.append('medium', file);  
+      formData.append('for', purpose);    
+      formData.append('type', type);       
       const response = await baseAxios.post("media", formData, {
         headers: {
-          "Content-Type": "multipart/form-data",
+          'Content-Type': 'multipart/form-data',
         },
         showToast: options.showToast !== false,
       });

@@ -138,7 +138,7 @@ export default function Login() {
                 },
               }}
             >
-              {t("auth.forgotPassword")}
+              {t("auth.forgetPassword")}
             </Typography>
           </Stack>
 

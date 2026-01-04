@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
@@ -23,6 +23,11 @@ import { logout } from "@/store/auth/authSlice";
 import { selectUserInfo } from "@/store/auth/selectors";
 import { useNavigate } from "react-router";
 import Divider from "@mui/material/Divider";
+import {
+  useUnreadNotificationsCount,
+  useMarkAllNotificationsAsRead,
+} from "@/hooks/api/useNotifications";
+import NotificationMenu from "./NotificationMenu";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -49,23 +54,29 @@ export default function NavBar({ onOpenSidebar, title }) {
   
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [notificationAnchorEl, setNotificationAnchorEl] = React.useState(null);
+  const [searchValue, setSearchValue] = useState("");
   const open = Boolean(anchorEl);
   const notificationOpen = Boolean(notificationAnchorEl);
   
   const displayTitle = title || t("navbar.dashboard");
 
+  const { data: unreadCountData } = useUnreadNotificationsCount();
+  const markAllAsRead = useMarkAllNotificationsAsRead();
+
+  const unreadCount = unreadCountData?.unread_count || 0;
+
   // Get user initials for avatar
   const getInitials = () => {
-    if (userInfo?.name) {
-      return userInfo.name
+    if (userInfo?.first_name) {
+      return userInfo.first_name
         .split(" ")
         .map((n) => n[0])
         .join("")
         .toUpperCase()
         .slice(0, 2);
     }
-    if (userInfo?.email) {
-      return userInfo.email[0].toUpperCase();
+    if (userInfo?.username) {
+      return userInfo.username[0].toUpperCase();
     }
     return "U";
   };
@@ -88,6 +99,25 @@ export default function NavBar({ onOpenSidebar, title }) {
     setAnchorEl(null);
     dispatch(logout());
     navigate("/auth/login");
+  };
+
+  // Handle bell icon click - mark all as read and open menu
+  const handleNotificationBellClick = (e) => {
+    // Mark all notifications as read when bell is clicked
+    markAllAsRead.mutate();
+    setNotificationAnchorEl(e.currentTarget);
+  };
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    if (searchValue.trim()) {
+      navigate(`/users?keyword=${encodeURIComponent(searchValue.trim())}`);
+      setSearchValue("");
+    }
+  };
+
+  const handleSearchChange = (e) => {
+    setSearchValue(e.target.value);
   };
 
   return (
@@ -122,6 +152,8 @@ export default function NavBar({ onOpenSidebar, title }) {
 
         {/* Search */}
         <Box 
+          component="form"
+          onSubmit={handleSearchSubmit}
           sx={{ 
             flex: 1, 
             display: "flex", 
@@ -136,6 +168,8 @@ export default function NavBar({ onOpenSidebar, title }) {
               inputProps={{ "aria-label": "search" }} 
               sx={{ width: "100%" }}
               dir={theme.direction}
+              value={searchValue}
+              onChange={handleSearchChange}
             />
           </Search>
         </Box>
@@ -165,49 +199,21 @@ export default function NavBar({ onOpenSidebar, title }) {
           {/* Notifications */}
           <Tooltip title={t("navbar.notifications")}>
             <IconButton
-              onClick={(e) => setNotificationAnchorEl(e.currentTarget)}
+              onClick={handleNotificationBellClick}
               sx={{ color: theme.palette.text.primary }}
             >
-              <Badge badgeContent={0} color="secondary">
+              <Badge badgeContent={unreadCount > 0 ? unreadCount : 0} color="error">
                 <NotificationsIcon />
               </Badge>
             </IconButton>
           </Tooltip>
 
           {/* Notifications Menu */}
-          <Menu
+          <NotificationMenu
             anchorEl={notificationAnchorEl}
             open={notificationOpen}
             onClose={() => setNotificationAnchorEl(null)}
-            anchorOrigin={{
-              vertical: "bottom",
-              horizontal: theme.direction === "rtl" ? "left" : "right",
-            }}
-            transformOrigin={{
-              vertical: "top",
-              horizontal: theme.direction === "rtl" ? "left" : "right",
-            }}
-            PaperProps={{
-              sx: {
-                mt: 1.5,
-                minWidth: 300,
-                maxWidth: 360,
-                maxHeight: 400,
-              },
-            }}
-          >
-            <Box sx={{ p: 2 }}>
-              <Typography variant="subtitle2" fontWeight={600}>
-                {t("navbar.notifications")}
-              </Typography>
-            </Box>
-            <Divider />
-            <Box sx={{ p: 2, textAlign: "center" }}>
-              <Typography variant="body2" color="text.secondary">
-                {t("navbar.noNotifications")}
-              </Typography>
-            </Box>
-          </Menu>
+          />
 
           {/* Avatar / User Menu */}
           <Tooltip title={t("navbar.account")}>

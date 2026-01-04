@@ -9,6 +9,7 @@ export default function DataTable({
   loading = false,
   pagination,
   onPageChange,
+  getRowClassName,
 }) {
   const theme = useTheme();
 
@@ -31,17 +32,17 @@ export default function DataTable({
         /** ✅ Server-side pagination */
         pagination
         paginationMode="server"
-        rowCount={pagination?.total}
-        page={pagination?.page}
-        pageSize={pagination?.pageSize}
-        onPageChange={(page) => onPageChange?.(page)}
-        onPageSizeChange={(pageSize) =>
-          onPageChange?.(pagination.page, pageSize)
-        }
+        rowCount={pagination?.total || 0}
+        page={pagination?.page || 0}
+        pageSize={pagination?.pageSize || 10}
+        onPaginationModelChange={(model) => {
+          onPageChange?.(model.page, model.pageSize);
+        }}
 
         rowsPerPageOptions={[5, 10, 25, 50]}
         disableRowSelectionOnClick
         slots={{ toolbar: GridToolbar }}
+        getRowClassName={getRowClassName}
 
         sx={{
           border: "none",
@@ -51,6 +52,16 @@ export default function DataTable({
           "& .MuiDataGrid-columnHeaders": {
             background: theme.palette.background.default,
             borderBottom: `1px solid ${theme.palette.divider}`,
+          },
+          "& .MuiDataGrid-row.highlighted": {
+            backgroundColor: theme.palette.mode === "dark"
+              ? "rgba(144, 202, 249, 0.16)"
+              : "rgba(25, 118, 210, 0.08)",
+            "&:hover": {
+              backgroundColor: theme.palette.mode === "dark"
+                ? "rgba(144, 202, 249, 0.24)"
+                : "rgba(25, 118, 210, 0.12)",
+            },
           },
         }}
       />
