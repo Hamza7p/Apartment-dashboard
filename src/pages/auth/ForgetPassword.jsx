@@ -63,7 +63,7 @@ export default function ForgetPassword() {
     defaultValues: {
       phone: "",
       password: "",
-      confirmation_password: "",
+      password_confirmation: "",
     },
     mode: "onChange",
   });
@@ -298,7 +298,7 @@ export default function ForgetPassword() {
                 />
 
                 <PasswordField
-                  name="confirmation_password"
+                  name="password_confirmation"
                   label={t("auth.confirmPassword")}
                   autoComplete="new-password"
                   placeholder={t("auth.confirmPasswordPlaceholder")}

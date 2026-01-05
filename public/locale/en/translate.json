@@ -80,6 +80,7 @@
     }
   },
   "users": {
+    "identity_photo": "Identity Photo",
     "all": "All",
     "edit": "Edit",
     "searchPlaceholder": "Search on users's name ...",

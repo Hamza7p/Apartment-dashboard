@@ -3,7 +3,7 @@ import * as yup from "yup";
 /**
  * Phone validation regex (supports international formats)
  */
-const phoneRegex = /^(\+?[0-9]{1,3}[-.\s]?)?[0-9]{8,15}$/;
+const phoneRegex = /^9639[0-9]{8}$/;
 
 /**
  * Login form validation schema
@@ -41,7 +41,7 @@ export const verifyOtpSchema = yup.object({
   otp: yup
     .string()
     .required("OTP code is required")
-    .length(6, "OTP must be 6 digits")
+    .length(5, "OTP must be 5 digits")
     .matches(/^\d+$/, "OTP must contain only numbers"),
 });
 
@@ -57,7 +57,7 @@ export const resetPasswordSchema = yup.object({
     .string()
     .required("Password is required")
     .min(6, "Password must be at least 6 characters"),
-  confirmation_password: yup
+    password_confirmation: yup
     .string()
     .required("Please confirm your password")
     .oneOf([yup.ref("password")], "Passwords must match"),

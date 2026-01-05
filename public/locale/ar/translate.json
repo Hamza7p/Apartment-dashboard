@@ -80,6 +80,7 @@
     }
   },
   "users": {
+    "identity_photo": "صورة الهوية",
     "all": "الكل",
     "edit": "تعديل",
     "searchPlaceholder": "ابحث عن مستخدم باسمه ...",

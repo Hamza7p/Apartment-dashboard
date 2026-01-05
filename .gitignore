@@ -22,3 +22,5 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+API_USAGE_GUIDE.md
+REACT_QUERY_GUIDE.md

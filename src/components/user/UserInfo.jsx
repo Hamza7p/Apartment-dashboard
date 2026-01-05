@@ -17,12 +17,14 @@ import {
   Select,
   FormControl,
   InputLabel,
+  Paper,
 } from '@mui/material';
 import {
   Edit as EditIcon,
   Save as SaveIcon,
   Cancel as CancelIcon,
   PhotoCamera as PhotoCameraIcon,
+  Image,
 } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import { useUser, useUpdateUser } from '@/hooks/api/useUsers';
@@ -442,6 +444,48 @@ const UserInfo = ({ userId, isOwnProfile = false, allowRoleStatusEdit = false, u
             </Grid>
         </Grid>
         </CardContent>
+
+        <CardContent
+          sx={{
+            borderRadius: 3,
+            overflow: 'hidden',
+            p: 2,
+            my: 3,
+          }}
+        >
+          <Typography variant="h6" fontWeight={600} gutterBottom>
+            {t('users.identity_photo')}
+          </Typography>
+
+          <Box
+            sx={{
+              width: 220,
+              height: 140, 
+              border: '1px solid',
+              borderColor: 'divider',
+              borderRadius: 1,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              overflow: 'hidden',
+            }}
+          >
+            {user.identity_photo?.url ? (
+              <img
+                src={user.identity_photo.url}
+                alt={`${user.first_name} ${user.last_name}`}
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                }}
+              />
+            ) : (
+              <Image sx={{ fontSize: 48, color: 'text.disabled' }} />
+            )}
+          </Box>
+        </CardContent>
+
       </Card>
     </Box>
   );
