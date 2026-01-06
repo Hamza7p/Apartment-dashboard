@@ -47,12 +47,11 @@ const UserInfo = ({ userData, isProfile, isLoading, error, refetch }) => {
     handleSave,
     handlePhotoUpload,
     statusInfo,
-    handleFieldChange
+    handleFieldChange,
+    photoUrl
   } = useUserInfo({user, isProfile, refetch});
 
   let canEdit = isProfile;
-  
-  console.log('profile', isProfile)
 
    
   if (isLoading) {
@@ -105,9 +104,8 @@ const UserInfo = ({ userData, isProfile, isLoading, error, refetch }) => {
                 }}
               >
                 <Box sx={{ position: 'relative' }}>
-                  { console.log('url ', user.personal_photo?.url)}
                   <Avatar
-                    src={user.personal_photo?.url || '/assets/images/user.png'}
+                    src={photoUrl.personal_photo || '/assets/images/user.png'}
                     alt={`${user.first_name} ${user.last_name}`}
                     sx={{
                       width: 180,
@@ -161,7 +159,6 @@ const UserInfo = ({ userData, isProfile, isLoading, error, refetch }) => {
             <Grid item xs={12} md={8}>
               <Stack spacing={3}>
                 {/* Action Buttons */}
-                {canEdit && (
                   <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 1 }}>
                     {!isEditing ? (
                       <Button
@@ -196,65 +193,64 @@ const UserInfo = ({ userData, isProfile, isLoading, error, refetch }) => {
                       </Stack>
                     )}
                   </Box>
-                )}
 
                 {/* Form Fields */}
                 <Grid container spacing={3}>
-                  <Grid item xs={12} sm={6}>
+                  <Grid item xs={12} sm={6}  sx={{ minWidth: '31%'}}>
                     <TextField
                       fullWidth
                       label={t('users.first_name')}
                       value={formData.first_name || ''}
                       onChange={(e) => handleFieldChange('first_name', e.target.value)}
-                      disabled={!isEditing}
+                      disabled={(!isEditing || !canEdit)}
                       variant="outlined"
                     />
                   </Grid>
-                  <Grid item xs={12} sm={6}>
+                  <Grid item xs={12} sm={6} sx={{ minWidth: '31%'}}>
                     <TextField
                       fullWidth
                       label={t('users.last_name')}
                       value={formData.last_name || ''}
                       onChange={(e) => handleFieldChange('last_name', e.target.value)}
-                      disabled={!isEditing}
+                      disabled={!isEditing || !canEdit}
                       variant="outlined"
                     />
                   </Grid>
-                  <Grid item xs={12} sm={6}>
+                  <Grid item xs={12} sm={6} sx={{ minWidth: '31%'}}>
                     <TextField
                       fullWidth
                       label={t('users.username')}
                       value={formData.username || ''}
                       onChange={(e) => handleFieldChange('username', e.target.value)}
-                      disabled={!isEditing}
+                      disabled={!isEditing || !canEdit}
                       variant="outlined"
                     />
                   </Grid>
-                  <Grid item xs={12} sm={6}>
+                  <Grid item xs={12} sm={6} sx={{ minWidth: '31%'}}>
                     <TextField
                       fullWidth
                       label={t('users.phone')}
                       value={formData.phone || ''}
                       onChange={(e) => handleFieldChange('phone', e.target.value)}
-                      disabled={!isEditing}
+                      disabled={!isEditing || !canEdit}
                       variant="outlined"
                     />
                   </Grid>
-                  <Grid item xs={12} sm={6}>
+                  <Grid item xs={12} sm={6} sx={{ minWidth: '31%'}}>
                     <TextField
                       fullWidth
                       label={t('users.date_of_birth')}
                       type="date"
                       value={formData.date_of_birth || ''}
                       onChange={(e) => handleFieldChange('date_of_birth', e.target.value)}
-                      disabled={!isEditing}
+                      disabled={!isEditing || !canEdit}
                       variant="outlined"
                       InputLabelProps={{ shrink: true }}
                     />
                   </Grid>
                   { !isProfile && isEditing && (
                     <>
-                      <Grid item xs={12} sm={6}>
+                      <Grid item xs={12} sm={6} sx={{ minWidth: '31%'}}>
                         <FormControl fullWidth>
                           <InputLabel>{t('users.role')}</InputLabel>
                           <Select
@@ -267,7 +263,7 @@ const UserInfo = ({ userData, isProfile, isLoading, error, refetch }) => {
                           </Select>
                         </FormControl>
                       </Grid>
-                      <Grid item xs={12} sm={6}>
+                      <Grid item xs={12} sm={6} sx={{ minWidth: '31%'}}>
                         <FormControl fullWidth>
                           <InputLabel>{t('users.status')}</InputLabel>
                           <Select
@@ -291,19 +287,19 @@ const UserInfo = ({ userData, isProfile, isLoading, error, refetch }) => {
                   )}
                   {!isEditing && (
                     <>
-                      <Grid item xs={12} sm={6}>
+                      <Grid item xs={12} sm={6} sx={{ minWidth: '31%'}}>
                         <Typography variant="body2" color="text.secondary">
                           {t('users.role')}
                         </Typography>
                         <Chip
                           label={user.role === RoleName.admin ? t('users.admin') : t('users.user')}
-                          color={user.role === RoleName.admin ? 'primary' : 'default'}
+                          color={user.role === RoleName.admin ? 'secondary' : 'default'}
                           variant="outlined"
                           size="small"
-                          sx={{ mt: 0.5 }}
+                          sx={{ mt: 0.5 , p: 2, width: '30%'}}
                         />
                       </Grid>
-                      <Grid item xs={12} sm={6}>
+                      <Grid item xs={12} sm={6} sx={{ minWidth: '31%'}}>
                         <Typography variant="body2" color="text.secondary">
                           {t('users.verified_at')}
                         </Typography>
@@ -338,7 +334,7 @@ const UserInfo = ({ userData, isProfile, isLoading, error, refetch }) => {
           sx={{
             borderRadius: 3,
             overflow: 'hidden',
-            p: 2,
+            p: 3,
             my: 3,
           }}
         >
@@ -351,17 +347,18 @@ const UserInfo = ({ userData, isProfile, isLoading, error, refetch }) => {
               width: 220,
               height: 140, 
               border: '1px solid',
-              borderColor: 'divider',
+              borderColor: isEditing ? 'primary.main' : 'divider',
               borderRadius: 1,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               overflow: 'hidden',
+              position: 'relative',
             }}
           >
-            {user.identity_photo?.url ? (
+            {photoUrl.id_photo ? (
               <img
-                src={user.identity_photo.url}
+                src={photoUrl.id_photo}
                 alt={`${user.first_name} ${user.last_name}`}
                 style={{
                   width: '100%',
@@ -372,6 +369,33 @@ const UserInfo = ({ userData, isProfile, isLoading, error, refetch }) => {
             ) : (
               <Image sx={{ fontSize: 48, color: 'text.disabled' }} />
             )}
+            {/* edit id photo  */}
+             {isEditing && canEdit && (
+                <IconButton
+                  component="label"
+                  sx={{
+                    position: 'absolute',
+                    bottom: 0,
+                    right: 0,
+                    bgcolor: 'primary.main',
+                    color: 'white',
+                    '&:hover': { bgcolor: 'primary.dark' },
+                  }}
+                      disabled={uploadingPhoto}
+                    >
+                      <input
+                        type="file"
+                        hidden
+                        accept="image/*"
+                        onChange={(e) => handlePhotoUpload(e, 'id-photo')}
+                      />
+                      {uploadingPhoto ? (
+                        <CircularProgress size={20} color="inherit" />
+                      ) : (
+                        <PhotoCameraIcon />
+                      )}
+                    </IconButton>
+                  )}
           </Box>
         </CardContent>
 

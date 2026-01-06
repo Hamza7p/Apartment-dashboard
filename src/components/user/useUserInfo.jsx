@@ -4,7 +4,7 @@ import { useUpdateProfile } from '@/hooks/api/useProfile';
 import { useUpdateUser } from '@/hooks/api/useUsers';
 import { USER_STATUS_MAP } from '@/utils/UserStatus.helper';
 import { t } from 'i18next';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 const useUserInfo = ({user, isProfile, refetch}) => {
 
@@ -23,6 +23,7 @@ const useUserInfo = ({user, isProfile, refetch}) => {
   });
 
   const initializeFormData = {
+    id: user.id || '',
     first_name: user.first_name || '',
     last_name: user.last_name || '',
     username: user.username || '',
@@ -30,14 +31,28 @@ const useUserInfo = ({user, isProfile, refetch}) => {
     date_of_birth: user.date_of_birth || '',
     role: user.role || '',
     status: user.status || UserStatus.pending,
-    personal_photo_id: user.personal_photo?.id || null,
-    id_photo_id: user.id_photo?.id || null,
+    personal_photo: user.personal_photo?.id || null,
+    id_photo: user.id_photo?.id || null,
   }
     
   const updateMutation = isProfile ? updateProfile : updateUser;
   const [isEditing, setIsEditing] = useState(false);
-  const [formData, setFormData] = useState(initializeFormData);
+  const [formData, setFormData] = useState({});
   const [uploadingPhoto, setUploadingPhoto] = useState(false);
+  const [photoUrl, setPhotoUrl] = useState({
+    personal_photo: null,
+    id_photo: null,
+  });
+
+  useEffect(() => {
+    if (user) {
+      setFormData(initializeFormData);
+      setPhotoUrl({
+          personal_photo: user.personal_photo?.url || null,
+          id_photo: user.id_photo?.url || null,
+        });
+    }
+  }, [user])
 
   const handleFieldChange = (field, value) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -45,9 +60,11 @@ const useUserInfo = ({user, isProfile, refetch}) => {
 
   const uploadMedia = useUploadMedia({
     onSuccess: (data) => {
-      const mediaId = data?.data?.id || data?.id;
-      if (mediaId) {
-        handleFieldChange('personal_photo_id', mediaId);
+      const mediaId = data?.id;
+      const purpose = data?.for === 'personal-photo' ? 'personal_photo' : 'id_photo';
+      if (mediaId && purpose) {
+        handleFieldChange(purpose, mediaId);
+        setPhotoUrl((prev) => ({ ...prev, [purpose]: data?.url }));
       }
     },
     onError: (error) => {
@@ -102,7 +119,8 @@ const useUserInfo = ({user, isProfile, refetch}) => {
     handleSave,
     handlePhotoUpload,
     statusInfo,
-    handleFieldChange
+    handleFieldChange,
+    photoUrl
   }
 }
 
