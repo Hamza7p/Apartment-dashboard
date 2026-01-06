@@ -4,13 +4,11 @@ import { Container } from '@mui/material'
 import { t } from 'i18next'
 import React from 'react'
 import { useParams } from 'react-router'
-import { useSelector } from 'react-redux'
-import { selectUserInfo } from '@/store/auth/selectors'
+import { useUser } from '@/hooks/api/useUsers'
 
 const UserDetails = () => {
-  const { id: userId } = useParams()
-  const currentUser = useSelector(selectUserInfo)
-  const isOwnProfile = currentUser?.id?.toString() === userId
+  const { id: userId } = useParams();
+  const { data: userData, isLoading, error, refetch } = useUser(userId);
 
   return (
     <Container>
@@ -18,7 +16,13 @@ const UserDetails = () => {
         title={t("users.user_details")} 
         showBackButton={true}
       />
-      <UserInfo userId={userId} isOwnProfile={isOwnProfile} />
+      <UserInfo 
+        userData={userData} 
+        isProfile={false}
+        isLoading={isLoading}
+        error={error}
+        refetch={refetch}
+      />
     </Container>
   )
 }

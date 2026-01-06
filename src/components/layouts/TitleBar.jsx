@@ -27,7 +27,6 @@ const TitleBar = ({title, buttonTitle, onClick = () => {}, showBackButton = fals
       py: 2, 
       borderRadius: 1,
       boxShadow:"3px 3px 3px 0 rgba(0,0,0,0.2)",
-      flexDirection: theme.direction === 'rtl' ? 'row-reverse' : 'row'
     }}>
       <Box sx={{ 
         display: "flex", 

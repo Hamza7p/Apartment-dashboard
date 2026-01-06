@@ -143,7 +143,7 @@ const NotificationMenu = ({ anchorEl, open, onClose }) => {
                       mb: 0.5,
                     }}
                   >
-                    {notification.title || t("navbar.notification")}
+                    {notification.title || t("navbar.notifications")}
                   </Typography>
                   {notification.body && (
                     <Typography

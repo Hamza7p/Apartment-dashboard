@@ -33,7 +33,7 @@ const UsersTable = ({ users, loading = false, error, onPageChange, highlightUser
     },
   });
 
-  /** ✅ فصل البيانات */
+  /** Data */
   const rows = users?.data ?? [];
 
   const pagination = {
@@ -117,10 +117,11 @@ const UsersTable = ({ users, loading = false, error, onPageChange, highlightUser
         return (
           <Chip
             icon={status.icon}
-            label={status.label}
+            label={t(`users.${status.label}`)}
             color={status.color}
             variant="filled"
             size="small"
+            sx={{ p: 1 }}
           />
         );
       },

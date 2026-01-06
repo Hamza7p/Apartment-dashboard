@@ -145,6 +145,10 @@ export const buildTheme = (mode, language = "en") => {
             borderRadius: 12,
           },
         },
+        input: {
+          direction: direction,
+          textAlign: language === "ar"? 'right': 'left',
+        },
       },
     },
   },

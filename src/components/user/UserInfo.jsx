@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from 'react';
 import {
   Box,
   Grid,
@@ -27,146 +26,35 @@ import {
   Image,
 } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
-import { useUser, useUpdateUser } from '@/hooks/api/useUsers';
-import { useUpdateProfile } from '@/hooks/api/useProfile';
-import { useUploadMedia } from '@/hooks/api/useMedia';
-import { useSelector } from 'react-redux';
-import { selectUserInfo } from '@/store/auth/selectors';
+// import { useUpdateUser } from '@/hooks/api/useUsers';
+// import { useUpdateProfile } from '@/hooks/api/useProfile';
+// import { useUploadMedia } from '@/hooks/api/useMedia';
 import { UserStatus } from '@/enums/UserStatus';
-import { USER_STATUS_MAP } from '@/utils/UserStatus.helper';
+// import { USER_STATUS_MAP } from '@/utils/UserStatus.helper';
 import { RoleName } from '@/enums/RoleName';
+import useUserInfo from './useUserInfo.jsx';
 
-const UserInfo = ({ userId, isOwnProfile = false, allowRoleStatusEdit = false, useProfileUpdate = false }) => {
+const UserInfo = ({ userData, isProfile, isLoading, error, refetch }) => {
   const { t } = useTranslation();
-  const currentUser = useSelector(selectUserInfo);
-  const { data: userData, isLoading, error, refetch } = useUser(userId);
-  
-  const updateUser = useUpdateUser({
-    onSuccess: () => {
-      setIsEditing(false);
-      refetch();
-    },
-  });
-  
-  const updateProfile = useUpdateProfile({
-    onSuccess: () => {
-      setIsEditing(false);
-      refetch();
-    },
-  });
-  
-  const updateMutation = useProfileUpdate ? updateProfile : updateUser;
-  const [isEditing, setIsEditing] = useState(false);
-  const [formData, setFormData] = useState({});
-  const [uploadingPhoto, setUploadingPhoto] = useState(false);
-
   const user = userData?.data || userData || {};
+  const { 
+    updateMutation,
+    isEditing,
+    formData,
+    uploadingPhoto,
+    handleEdit,
+    handleCancel,
+    handleSave,
+    handlePhotoUpload,
+    statusInfo,
+    handleFieldChange
+  } = useUserInfo({user, isProfile, refetch});
 
-  const handleFieldChange = (field, value) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
-  };
+  let canEdit = isProfile;
+  
+  console.log('profile', isProfile)
 
-  const uploadMedia = useUploadMedia({
-    onSuccess: (data) => {
-      const mediaId = data?.data?.id || data?.id;
-      if (mediaId) {
-        handleFieldChange('personal_photo_id', mediaId);
-      }
-    },
-    onError: (error) => {
-      console.error('Photo upload error:', error);
-    },
-  });
-
-  useEffect(() => {
-    if (user) {
-      setFormData({
-        first_name: user.first_name || '',
-        last_name: user.last_name || '',
-        username: user.username || '',
-        phone: user.phone || '',
-        date_of_birth: user.date_of_birth || '',
-        role: user.role || '',
-        status: user.status || UserStatus.pending,
-        personal_photo_id: user.personal_photo?.id || null,
-      });
-    }
-  }, [user]);
-
-  const handleEdit = () => {
-    setIsEditing(true);
-  };
-
-  const handleCancel = () => {
-    setIsEditing(false);
-    setFormData({
-      first_name: user.first_name || '',
-      last_name: user.last_name || '',
-      username: user.username || '',
-      phone: user.phone || '',
-      date_of_birth: user.date_of_birth || '',
-      role: user.role || '',
-      status: user.status || UserStatus.pending,
-      personal_photo_id: user.personal_photo?.id || null,
-    });
-  };
-
-  const handleSave = () => {
-    const updateData = { id: userId };
-    
-    if (isOwnProfile) {
-      // Admin can update all fields except role and status for own profile
-      updateData.first_name = formData.first_name;
-      updateData.last_name = formData.last_name;
-      updateData.username = formData.username;
-      updateData.phone = formData.phone;
-      updateData.date_of_birth = formData.date_of_birth;
-      updateData.personal_photo_id = formData.personal_photo_id;
-    } else if (allowRoleStatusEdit) {
-      // Only allow role and status edit if explicitly allowed
-      updateData.role = formData.role;
-      updateData.status = formData.status;
-    } else {
-      // In user details page, allow editing all fields except role and status
-      updateData.first_name = formData.first_name;
-      updateData.last_name = formData.last_name;
-      updateData.username = formData.username;
-      updateData.phone = formData.phone;
-      updateData.date_of_birth = formData.date_of_birth;
-      updateData.personal_photo_id = formData.personal_photo_id;
-    }
-
-    updateMutation.mutate(updateData);
-  };
-
-  const handlePhotoUpload = (event, purpose) => {
-    const file = event.target.files[0];
-    if (file) {
-      // Validate file type
-      if (!file.type.startsWith('image/')) {
-        alert(t('users.invalidImageType') || 'Please select a valid image file');
-        return;
-      }
-      
-      // Validate file size (max 5MB)
-      if (file.size > 5 * 1024 * 1024) {
-        alert(t('users.imageTooLarge') || 'Image size should be less than 5MB');
-        return;
-      }
-      
-      setUploadingPhoto(true);
-      uploadMedia.mutate({file, purpose}, {
-        onSettled: () => {
-          setUploadingPhoto(false);
-        },
-      });
-    }
-  };
-
-  const isAdmin = currentUser?.role === RoleName.admin;
-  const canEdit = isAdmin && (isOwnProfile || !isOwnProfile);
-  const statusInfo = USER_STATUS_MAP[user.status] || USER_STATUS_MAP[UserStatus.pending];
-
+   
   if (isLoading) {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" minHeight={400}>
@@ -174,14 +62,14 @@ const UserInfo = ({ userId, isOwnProfile = false, allowRoleStatusEdit = false, u
       </Box>
     );
   }
-
+  
   const isNetworkError =
     error &&
     (!error.response ||
       error.code === "ERR_NETWORK" ||
       error.message === "Network Error" ||
       error.message?.includes("timeout"));
-
+  
   if (error) {
     return (
       <Alert severity="error" sx={{ mb: 3 }}>
@@ -193,7 +81,7 @@ const UserInfo = ({ userId, isOwnProfile = false, allowRoleStatusEdit = false, u
             "Error loading user"}
       </Alert>
     );
-  }
+    }
 
   return (
     <Box>
@@ -229,7 +117,7 @@ const UserInfo = ({ userId, isOwnProfile = false, allowRoleStatusEdit = false, u
                       boxShadow: 4,
                     }}
                   />
-                  {isEditing && (isOwnProfile || !isOwnProfile) && (
+                  {isEditing && canEdit && (
                     <IconButton
                       component="label"
                       sx={{
@@ -261,10 +149,10 @@ const UserInfo = ({ userId, isOwnProfile = false, allowRoleStatusEdit = false, u
                 </Typography>
                 <Chip
                   icon={statusInfo.icon}
-                  label={statusInfo.label}
+                  label={t(`users.${statusInfo.label}`)}
                   color={statusInfo.color}
                   variant="filled"
-                  sx={{ fontWeight: 600 }}
+                  sx={{ fontWeight: 600 , p: 1}}
                 />
               </Box>
             </Grid>
@@ -278,7 +166,7 @@ const UserInfo = ({ userId, isOwnProfile = false, allowRoleStatusEdit = false, u
                     {!isEditing ? (
                       <Button
                         variant="contained"
-                        startIcon={<EditIcon />}
+                        startIcon={<EditIcon sx={{  ml: 1 }} />}
                         onClick={handleEdit}
                       >
                         {t('users.edit')}
@@ -364,7 +252,7 @@ const UserInfo = ({ userId, isOwnProfile = false, allowRoleStatusEdit = false, u
                       InputLabelProps={{ shrink: true }}
                     />
                   </Grid>
-                  {allowRoleStatusEdit && !isOwnProfile && isEditing && (
+                  { !isProfile && isEditing && (
                     <>
                       <Grid item xs={12} sm={6}>
                         <FormControl fullWidth>
@@ -445,6 +333,7 @@ const UserInfo = ({ userId, isOwnProfile = false, allowRoleStatusEdit = false, u
         </Grid>
         </CardContent>
 
+        {/* identity photo section  */}
         <CardContent
           sx={{
             borderRadius: 3,
