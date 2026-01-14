@@ -10,7 +10,7 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import {
   useNotifications,
-  useMarkNotificationAsRead,
+  useMarkAllNotificationsAsRead,
 } from "@/hooks/api/useNotifications";
 
 const NotificationMenu = ({ anchorEl, open, onClose }) => {
@@ -24,7 +24,7 @@ const NotificationMenu = ({ anchorEl, open, onClose }) => {
     { enabled: open }
   );
 
-  const markAsRead = useMarkNotificationAsRead();
+  const markAsRead = useMarkAllNotificationsAsRead();
 
   const notifications = notificationsData?.data || notificationsData || [];
 
